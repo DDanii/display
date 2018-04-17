@@ -62,6 +62,11 @@ void loop()
     HTTPClient httpUpdate;
     HTTPClient httpM;
     HTTPClient httpDate;
+    HTTPClient httpConds;
+    HTTPClient httpFore;
+    HTTPClient httpSky;
+    HTTPClient httpRain;
+    HTTPClient httpTodo;
 
     httpUpdate.begin("http://ddani.ddns.net/update/");
     httpUpdate.GET();
@@ -79,6 +84,16 @@ void loop()
     httpM.GET();
     httpDate.begin("http://ddani.ddns.net/date/");  //Specify request destination
     httpDate.GET();
+    httpConds.begin("http://ddani.ddns.net/conds/");  //Specify request destination
+    httpConds.GET();
+    httpFore.begin("http://ddani.ddns.net/fore/");  //Specify request destination
+    httpFore.GET();
+    httpSky.begin("http://ddani.ddns.net/sky/");  //Specify request destination
+    httpSky.GET();
+    httpRain.begin("http://ddani.ddns.net/rain/");  //Specify request destination
+    httpRain.GET();
+    httpTodo.begin("http://ddani.ddns.net/todo/");  //Specify request destination
+    httpTodo.GET();
  
     if (httpCode > 0) { //Check the returning code
       while(1 == atoi(httpUpdate.getString().c_str()) ){
@@ -106,9 +121,42 @@ void loop()
       tft.print(":");
       tft.print(httpM.getString());
       tft.setCursor(0,20);
-      tft.print(httpDate.getString());
-      drawDiag(http2.getString(), ST7735_CYAN, 175);//Print the response payload
- 
+      printMid(httpDate.getString(),20);
+      tft.setCursor(0,30);
+      printMid(httpConds.getString(),30);
+      tft.setCursor(0,40);
+      tft.print("T");
+      tft.setCursor(4,40);
+      tft.print(":");
+      
+      drawDiag(httpFore.getString(), ST7735_BLUE, 100);
+
+      tft.setCursor(0,60);
+      tft.print("S");
+      tft.setCursor(4,60);
+      tft.print(":");
+      
+      drawDiag(httpSky.getString(), ST7735_BLUE, 120);
+
+      //TODO: B & T change pos clock 2 lower end +2 pix down & 2 size bigger todolist less /5 S & R
+      tft.setCursor(0,80);
+      tft.print("R");
+      tft.setCursor(4,80);
+      tft.print(":");
+      
+      drawDiag(httpRain.getString(), ST7735_BLUE, 140);
+
+      tft.setCursor(0,104);
+      tft.print("B");
+      tft.setCursor(4,104);
+      tft.print(":");
+      
+      drawDiag(http2.getString(), ST7735_BLUE, 160);//Print the response payload
+
+      tft.setCursor(0,120);
+      tft.print("Todo: ");
+      tft.print(httpTodo.getString());
+      
     }
  
     http1.end();
@@ -123,9 +171,17 @@ void loop()
   delay(300000);
   
 }
-
+//one char 6 pix wide
 void drawDiag(String numbers, int16_t color, int y){
-  int stp = 128/numbers.length();
-  for(int i=0;numbers.length()-1>i;i++)
-    tft.drawLine(i*stp, y-int(numbers.charAt(i)),(i+1)*stp, y-int(numbers.charAt(i+1)), color);
+  int stp = 120/(numbers.length()-2);
+  for(int i=0;numbers.length()-2>i;i++)
+    tft.drawLine(8+i*stp, y-int(numbers.charAt(i)),8+(i+1)*stp, y-int(numbers.charAt(i+1)), color);
 }
+void printMid(String str, int y){
+  int space= (128-str.length()*6)/2;
+  tft.setCursor(space,y);
+  tft.print(str);
+  //tft.print(space);
+  
+}
+
