@@ -116,47 +116,57 @@ void loop()
       tft.setCursor(0,0);
       tft.fillScreen(ST7735_BLACK);
       tft.print(payload);   
-      tft.setCursor(50,10);
+      tft.setCursor(30,30);
+      tft.setTextSize(2);
       tft.print(httpH.getString());
       tft.print(":");
       tft.print(httpM.getString());
+      tft.setTextSize(1);
+      tft.setCursor(0,10);
+      printMid(httpDate.getString(),10);
       tft.setCursor(0,20);
-      printMid(httpDate.getString(),20);
-      tft.setCursor(0,30);
-      printMid(httpConds.getString(),30);
-      tft.setCursor(0,40);
-      tft.print("T");
-      tft.setCursor(4,40);
+      printMid(httpConds.getString(),20);
+      
+      tft.setCursor(0,47);
+      tft.print("B");
+      tft.setCursor(4,47);
       tft.print(":");
       
-      drawDiag(httpFore.getString(), ST7735_BLUE, 100);
+      drawDiag(httpFore.getString(), ST7735_BLUE, 141);
 
       tft.setCursor(0,60);
       tft.print("S");
       tft.setCursor(4,60);
       tft.print(":");
-      
-      drawDiag(httpSky.getString(), ST7735_BLUE, 120);
 
-      //TODO: B & T change pos clock 2 lower end +2 pix down & 2 size bigger todolist less /5 S & R
-      tft.setCursor(0,80);
+      tft.drawLine(0,56,128,56,ST7735_BLUE);
+      
+      drawDiag(httpSky.getString(), ST7735_BLUE, 115);
+
+      //TODO: /5 S & R
+      tft.setCursor(0,73);
       tft.print("R");
-      tft.setCursor(4,80);
+      tft.setCursor(4,73);
       tft.print(":");
       
-      drawDiag(httpRain.getString(), ST7735_BLUE, 140);
-
-      tft.setCursor(0,104);
-      tft.print("B");
-      tft.setCursor(4,104);
-      tft.print(":");
+      tft.drawLine(0,69,128,69,ST7735_BLUE);
       
-      drawDiag(http2.getString(), ST7735_BLUE, 160);//Print the response payload
+      drawDiag(httpRain.getString(), ST7735_BLUE, 128);
 
-      tft.setCursor(0,120);
+      tft.setCursor(0,86);
+      tft.print("T");
+      tft.setCursor(4,86);
+      tft.print(":");
+
+      tft.drawLine(0,82,128,82,ST7735_BLUE);
+      
+      drawDiag(http2.getString(), ST7735_BLUE, 102);//Print the response payload
+
+      tft.setCursor(0,110);
       tft.print("Todo: ");
       tft.print(httpTodo.getString());
-      
+
+      tft.drawLine(0,95,128,95,ST7735_BLUE);
     }
  
     http1.end();
