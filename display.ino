@@ -143,7 +143,6 @@ void loop()
       
       drawDiag(httpSky.getString(), ST7735_BLUE, 115);
 
-      //TODO: /5 S & R
       tft.setCursor(0,73);
       tft.print("R");
       tft.setCursor(4,73);
@@ -175,13 +174,17 @@ void loop()
     httpUpdate.end();
     httpM.end();
     httpDate.end();
+    httpFore.end();
+    httpSky.end();
+    httpRain.end();
+    httpFore.end();
  
   }
  
   delay(300000);
   
 }
-//one char 6 pix wide
+//one char 6 pix wide 8 pix height
 void drawDiag(String numbers, int16_t color, int y){
   int stp = 120/(numbers.length()-2);
   for(int i=0;numbers.length()-2>i;i++)
