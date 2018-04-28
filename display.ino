@@ -7,26 +7,13 @@
 #include <Adafruit_GFX.h>    // Core graphics library
 #include <Adafruit_ST7735.h> // Hardware-specific library
 #include <SPI.h>
+#include <ctype.h>  
 
 
 
 const char* ssid = "DDNETWORK";
 const char* password = "DD95dd95DD";
 const char* addres= "http://ddani.ddns.net/";
-
-    HTTPClient http1;  //Declare an object of class HTTPClient
-    HTTPClient http2;
-    HTTPClient httpH; 
-    HTTPClient httpUpdate;
-    HTTPClient httpM;
-    HTTPClient httpDate;
-    HTTPClient httpConds;
-    HTTPClient httpFore;
-    HTTPClient httpSky;
-    HTTPClient httpRain;
-    HTTPClient httpTodo;
-    int httpCode=0;
-
 
 Adafruit_ST7735 tft = Adafruit_ST7735(16, 5, 4);//TFT_CS,  TFT_DC, TFT_RST);
 
@@ -63,20 +50,6 @@ ArduinoOTA.onStart([]() {
     else // U_SPIFFS
       type = "filesystem";
   });
-
-  
-    httpUpdate.begin("http://ddani.ddns.net/update/");
-    http1.begin("http://ddani.ddns.net/display1/");  //Specify request destination
-    http2.begin("http://ddani.ddns.net/display2/");  //Specify request destination
-    httpH.begin("http://ddani.ddns.net/hour/");  //Specify request destination
-    httpM.begin("http://ddani.ddns.net/minute/");  //Specify request destination
-    httpDate.begin("http://ddani.ddns.net/date/");  //Specify request destination
-    httpConds.begin("http://ddani.ddns.net/conds/");  //Specify request destination
-    httpFore.begin("http://ddani.ddns.net/fore/");  //Specify request destination
-    httpSky.begin("http://ddani.ddns.net/sky/");  //Specify request destination
-    httpRain.begin("http://ddani.ddns.net/rain/");  //Specify request destination
-    httpTodo.begin("http://ddani.ddns.net/todo/");  //Specify request destination
-       
 }
 
 
@@ -84,16 +57,43 @@ void loop()
 {
   if (WiFi.status() == WL_CONNECTED) { //Check WiFi connection status
  
+    HTTPClient http1;  //Declare an object of class HTTPClient
+    HTTPClient http2;
+    HTTPClient httpH; 
+    HTTPClient httpUpdate;
+    HTTPClient httpM;
+    HTTPClient httpDate;
+    HTTPClient httpConds;
+    HTTPClient httpFore;
+    HTTPClient httpSky;
+    HTTPClient httpRain;
+    HTTPClient httpTodo;
+
+    httpUpdate.begin("http://ddani.ddns.net/update/");
     httpUpdate.GET();
-    httpCode = http1.GET();
-    http2.GET();
+    
+    http1.begin("http://ddani.ddns.net/display1/");  //Specify request destination
+    int httpCode = http1.GET();                                                                  //Send the request
+
+    http2.begin("http://ddani.ddns.net/display2/");  //Specify request destination
+    int httpCode2 = http2.GET();
+    
+    httpH.begin("http://ddani.ddns.net/hour/");  //Specify request destination
     httpH.GET();
+
+    httpM.begin("http://ddani.ddns.net/minute/");  //Specify request destination
     httpM.GET();
-    httpDate.GET();   
+    httpDate.begin("http://ddani.ddns.net/date/");  //Specify request destination
+    httpDate.GET();
+    httpConds.begin("http://ddani.ddns.net/conds/");  //Specify request destination
     httpConds.GET();
+    httpFore.begin("http://ddani.ddns.net/fore/");  //Specify request destination
     httpFore.GET();
+    httpSky.begin("http://ddani.ddns.net/sky/");  //Specify request destination
     httpSky.GET();
+    httpRain.begin("http://ddani.ddns.net/rain/");  //Specify request destination
     httpRain.GET();
+    httpTodo.begin("http://ddani.ddns.net/todo/");  //Specify request destination
     httpTodo.GET();
  
     if (httpCode > 0) { //Check the returning code
@@ -168,7 +168,18 @@ void loop()
       tft.drawLine(0,99,128,99,ST7735_BLUE);
     }
  
-    
+    http1.end();
+    http2.end();//Close connection
+    httpH.end();
+    httpUpdate.end();
+    httpM.end();
+    httpDate.end();
+    httpConds.end();
+    httpFore.end();
+    httpSky.end();
+    httpRain.end();
+    httpFore.end();
+ 
   }
  
   delay(300000);
@@ -176,7 +187,7 @@ void loop()
 }
 //one char 6 pix wide 8 pix height
 void drawDiag(String numbers, int16_t color, int y){
-  if(numbers.length()==0)
+  if(3>numbers.length())
   {
     tft.setCursor(10,y-int('8'));
     tft.print("No Data");
@@ -184,6 +195,7 @@ void drawDiag(String numbers, int16_t color, int y){
   }
   int stp = 120/(numbers.length()-2);
   for(int i=0;numbers.length()-2>i;i++){
+    
     tft.drawLine(8+i*stp, y-int(numbers.charAt(i)),8+(i+1)*stp, y-int(numbers.charAt(i+1)), color);
     tft.drawLine(8+i*stp, 1+y-int(numbers.charAt(i)),8+(i+1)*stp, 1+y-int(numbers.charAt(i+1)), color);
   }
