@@ -69,31 +69,31 @@ void loop()
     HTTPClient httpRain;
     HTTPClient httpTodo;
 
-    httpUpdate.begin("http://ddani.ddns.net/update/");
+    httpUpdate.begin("http://89.133.44.39/update/");
     httpUpdate.GET();
     
-    http1.begin("http://ddani.ddns.net/display1/");  //Specify request destination
+    http1.begin("http://89.133.44.39/display1/");  //Specify request destination
     int httpCode = http1.GET();                                                                  //Send the request
 
-    http2.begin("http://ddani.ddns.net/display2/");  //Specify request destination
+    http2.begin("http://89.133.44.39/display2/");  //Specify request destination
     int httpCode2 = http2.GET();
     
-    httpH.begin("http://ddani.ddns.net/hour/");  //Specify request destination
+    httpH.begin("http://89.133.44.39/hour/");  //Specify request destination
     httpH.GET();
 
-    httpM.begin("http://ddani.ddns.net/minute/");  //Specify request destination
+    httpM.begin("http://89.133.44.39/minute/");  //Specify request destination
     httpM.GET();
-    httpDate.begin("http://ddani.ddns.net/date/");  //Specify request destination
+    httpDate.begin("http://89.133.44.39/date/");  //Specify request destination
     httpDate.GET();
-    httpConds.begin("http://ddani.ddns.net/conds/");  //Specify request destination
+    httpConds.begin("http://89.133.44.39/conds/");  //Specify request destination
     httpConds.GET();
-    httpFore.begin("http://ddani.ddns.net/fore/");  //Specify request destination
+    httpFore.begin("http://89.133.44.39/fore/");  //Specify request destination
     httpFore.GET();
-    httpSky.begin("http://ddani.ddns.net/sky/");  //Specify request destination
+    httpSky.begin("http://89.133.44.39/sky/");  //Specify request destination
     httpSky.GET();
-    httpRain.begin("http://ddani.ddns.net/rain/");  //Specify request destination
+    httpRain.begin("http://89.133.44.39/rain/");  //Specify request destination
     httpRain.GET();
-    httpTodo.begin("http://ddani.ddns.net/todo/");  //Specify request destination
+    httpTodo.begin("http://89.133.44.39/todo/");  //Specify request destination
     httpTodo.GET();
  
     if (httpCode > 0) { //Check the returning code
