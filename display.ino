@@ -69,31 +69,31 @@ void loop()
     HTTPClient httpRain;
     HTTPClient httpTodo;
 
-    httpUpdate.begin("http://89.133.44.39/update/");
+    httpUpdate.begin("http://192.168.0.96/update/");
     httpUpdate.GET();
     
-    http1.begin("http://89.133.44.39/display1/");  //Specify request destination
+    http1.begin("http://192.168.0.96/display1/");  //Specify request destination
     int httpCode = http1.GET();                                                                  //Send the request
 
-    http2.begin("http://89.133.44.39/display2/");  //Specify request destination
+    http2.begin("http://192.168.0.96/display2/");  //Specify request destination
     int httpCode2 = http2.GET();
     
-    httpH.begin("http://89.133.44.39/hour/");  //Specify request destination
+    httpH.begin("http://192.168.0.96/hour/");  //Specify request destination
     httpH.GET();
 
-    httpM.begin("http://89.133.44.39/minute/");  //Specify request destination
+    httpM.begin("http://192.168.0.96/minute/");  //Specify request destination
     httpM.GET();
-    httpDate.begin("http://89.133.44.39/date/");  //Specify request destination
+    httpDate.begin("http://192.168.0.96/date/");  //Specify request destination
     httpDate.GET();
-    httpConds.begin("http://89.133.44.39/conds/");  //Specify request destination
+    httpConds.begin("http://192.168.0.96/conds/");  //Specify request destination
     httpConds.GET();
-    httpFore.begin("http://89.133.44.39/fore/");  //Specify request destination
+    httpFore.begin("http://192.168.0.96/fore/");  //Specify request destination
     httpFore.GET();
-    httpSky.begin("http://89.133.44.39/sky/");  //Specify request destination
+    httpSky.begin("http://192.168.0.96/sky/");  //Specify request destination
     httpSky.GET();
-    httpRain.begin("http://89.133.44.39/rain/");  //Specify request destination
+    httpRain.begin("http://192.168.0.96/rain/");  //Specify request destination
     httpRain.GET();
-    httpTodo.begin("http://89.133.44.39/todo/");  //Specify request destination
+    httpTodo.begin("http://192.168.0.96/todo/");  //Specify request destination
     httpTodo.GET();
  
     if (httpCode > 0) { //Check the returning code
@@ -161,7 +161,7 @@ void loop()
       
       drawDiag(http2.getString(), ST7735_BLUE, 102);//Print the response payload
 
-      tft.setCursor(0,110);
+      tft.setCursor(0,102);
       tft.print("Todo: ");
       tft.print(httpTodo.getString());
 
@@ -182,7 +182,33 @@ void loop()
  
   }
  
-  delay(300000);
+  //delay(300000);
+for(int j=0;5000>j;j++){
+  for( int i=0; 30>i ;i++)
+    {
+      tft.drawLine(0,120,128,120, ST7735_BLUE /30 *i);
+      tft.drawLine(0,121,128,121, ST7735_BLUE /30 *i);
+      tft.drawLine(0,122,128,122, ST7735_BLUE /30 *i);
+      tft.drawLine(0,123,128,123, ST7735_BLUE /30 *i);
+      tft.drawLine(0,124,128,124, ST7735_BLUE /30 *i);
+      tft.drawLine(0,125,128,125, ST7735_BLUE /30 *i);
+      tft.drawLine(0,126,128,126, ST7735_BLUE /30 *i);
+      tft.drawLine(0,127,128,127, ST7735_BLUE /30 *i);
+      delay(3000/30);
+    }
+    for( int i=30; i>0 ;i--)
+    {
+      tft.drawLine(0,120,128,120, ST7735_BLUE /30 *i);
+      tft.drawLine(0,121,128,121, ST7735_BLUE /30 *i);
+      tft.drawLine(0,122,128,122, ST7735_BLUE /30 *i);
+      tft.drawLine(0,123,128,123, ST7735_BLUE /30 *i);
+      tft.drawLine(0,124,128,124, ST7735_BLUE /30 *i);
+      tft.drawLine(0,125,128,125, ST7735_BLUE /30 *i);
+      tft.drawLine(0,126,128,126, ST7735_BLUE /30 *i);
+      tft.drawLine(0,127,128,127, ST7735_BLUE /30 *i);
+      delay(3000/30);
+    }
+}
   
 }
 //one char 6 pix wide 8 pix height
